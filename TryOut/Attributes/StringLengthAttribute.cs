@@ -14,3 +14,9 @@ internal class AttributesMetadata
         }
     }
 }
+
+public class Person
+{
+    [AttributesMetadata.StringLengthAttribute(2, 50)]
+    public required string Name { get; set; }
+}

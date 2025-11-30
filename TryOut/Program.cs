@@ -1,14 +1,7 @@
-﻿using TryOut.Attributes;
-
-StringLengthValidator validator = new();
-Person invalidPerson = new Person() { Name = "2" };
-Person validPerson = new Person() { Name = "Defined-Name" };
-
-Console.WriteLine(validator.Validate(invalidPerson) ? "Valid Object" : "Invalid Object");
-Console.WriteLine(validator.Validate(validPerson) ? "Valid Object" : "Invalid Object");
-
-public class Person
+﻿readonly struct Point
 {
-    [AttributesMetadata.StringLengthAttribute(2, 50)]
-    public required string Name { get; set; }
+    private readonly int _field;
+    public int X { get; } // works fine
+    public int Y { get; init; } // works fine
+    // public int X { get; private set; } // Compilation error
 }
