@@ -24,7 +24,7 @@ public class StarWarsApp
         if (planets is not null)
         {
             IEnumerable<PlanetDto> planetDtos = planets.Select(planet => (PlanetDto)planet);
-            _userCommunication.PrintPlanets(planetDtos);
+            _userCommunication.PrintAsTable(planetDtos);
 
             _userCommunication.PrintStatisticsOptions();
             string? userInput = Console.ReadLine();

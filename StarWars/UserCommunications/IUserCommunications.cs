@@ -3,6 +3,6 @@
 public interface IUserCommunications
 {
     void PrintMessage(string message);
-    void PrintPlanets(IEnumerable<PlanetDto> planets);
+    void PrintAsTable<T>(IEnumerable<T> data) where T: class;
     void PrintStatisticsOptions();
 }
