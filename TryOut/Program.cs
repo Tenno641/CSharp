@@ -1,6 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 
+var hugeArray = Enumerable.Repeat(0, 100_000_000);
+List<int> ints = new List<int>(hugeArray);
+
+ints.Clear(); // memory still allocated
+ints.TrimExcess();
+
+ints.Remove(2); // will search the list and then delete
+
+
+
 string[] stringArray = { "one", "two", "three" };
 int? wordIndex = BinarySearch(stringArray, "three");
 Console.WriteLine(wordIndex);
