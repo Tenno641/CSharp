@@ -1,4 +1,24 @@
 ﻿using System.Collections;
+using System.Collections.ObjectModel;
+
+List<string> words = (List<string>)GetNumbers();
+words.Add("Honga-Bonga");
+
+Console.WriteLine(string.Join(Environment.NewLine, words));
+
+IEnumerable<string> GetNumbers()
+{
+    List<string> words = new List<string>() { "One", "Two", "three" };
+    return new ReadOnlyCollection<string>(words);
+}
+
+/*
+var array = new int[] { 1, 5, 6, 3 };
+var implementedInterfaces = array.GetType().GetInterfaces();
+Console.WriteLine(string.Join<Type>(Environment.NewLine, implementedInterfaces));
+
+ICollection<int> collection = array;
+collection.Add(5);
 
 var customCollection = new CustomCollection(new string[] { "name1", "name2", "name3" });
 Console.WriteLine(customCollection[0]);
@@ -7,11 +27,7 @@ foreach(var item in customCollection) // boxing may happen which is bad.
 {
     Console.WriteLine(item);
 }
-var newCustomCollection = new CustomCollection { "one", "two", "three" };
-CustomCollection newCustomCollectionExpression = ["one", "two", "three"];
-Console.ReadKey();
 
-/*
 IEnumerator wordsEnumerator = type.GetEnumerator();
 object currentWord;
 while(wordsEnumerator.MoveNext())
@@ -23,7 +39,6 @@ while(wordsEnumerator.MoveNext())
 public class CustomCollection : IEnumerable<string>
 {
     public string[] Words { get; }
-    private int _currentIndex = 0;
     public CustomCollection(int capacity = 10)
     {
         Words = new string[capacity];
@@ -31,10 +46,6 @@ public class CustomCollection : IEnumerable<string>
     public CustomCollection(string[] words)
     {
         Words = words;
-    }
-    public void Add(string value)
-    {
-        Words[_currentIndex++] = value; 
     }
     public string this[int index]
     {
