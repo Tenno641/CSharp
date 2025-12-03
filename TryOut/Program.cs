@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 
-var type = new CustomCollection(new string[] { "name1", "name2", "name3" });
-foreach(var item in type) // boxing may happen which is bad.
+var customCollection = new CustomCollection(new string[] { "name1", "name2", "name3" });
+Console.WriteLine(customCollection[0]);
+customCollection[1] = "Honga-Bonga";
+foreach(var item in customCollection) // boxing may happen which is bad.
 {
     Console.WriteLine(item);
 }
@@ -21,7 +23,11 @@ public class CustomCollection : IEnumerable<string>
     {
         Words = words;
     }
-
+    public string this[int index]
+    {
+        get => Words[index];
+        set => Words[index] = value;
+    }
     IEnumerator IEnumerable.GetEnumerator()
     {
         return new WordsEnumerator(Words);
@@ -29,9 +35,9 @@ public class CustomCollection : IEnumerable<string>
 
     public IEnumerator<string> GetEnumerator()
     {
-        Console.WriteLine("Generic");
-        throw new NotImplementedException();
+        return new WordsEnumerator(Words);
     }
+
 }
 
 public class WordsEnumerator : IEnumerator<string>
@@ -75,30 +81,32 @@ public class WordsEnumerator : IEnumerator<string>
     {
         _currentPosition = _InitialPosition;
     }
-} 
-interface IApp
-{
-    void Run();
-    void AppMethod();
 }
-interface IProcess<T> : IApp
+
+public class PairOfArrays<TLeft, TRight>
 {
-    new T Run();
-}
-class CustomShit<T> : IProcess<T>
-{
-    public void AppMethod()
+    private readonly TLeft[] _left;
+    private readonly TRight[] _right;
+
+    public PairOfArrays(
+        TLeft[] left, TRight[] right)
     {
-        throw new NotImplementedException();
+        _left = left;
+        _right = right;
     }
 
-    public T Run()
+    public (TLeft, TRight) this[int leftIndex, int rightIndex]
     {
-        throw new NotImplementedException();
-    }
-
-    void IApp.Run()
-    {
-        throw new NotImplementedException();
+        get
+        {
+            if (leftIndex > _left.Length || rightIndex > _right.Length) throw new IndexOutOfRangeException();
+            return (_left[leftIndex], _right[rightIndex]);
+        }
+        set
+        {
+            if (leftIndex > _left.Length || rightIndex > _right.Length) throw new IndexOutOfRangeException();
+            _left[leftIndex] = value.Item1;
+            _right[rightIndex] = value.Item2;
+        }
     }
 }
