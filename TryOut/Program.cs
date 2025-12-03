@@ -7,6 +7,10 @@ foreach(var item in customCollection) // boxing may happen which is bad.
 {
     Console.WriteLine(item);
 }
+var newCustomCollection = new CustomCollection { "one", "two", "three" };
+CustomCollection newCustomCollectionExpression = ["one", "two", "three"];
+Console.ReadKey();
+
 /*
 IEnumerator wordsEnumerator = type.GetEnumerator();
 object currentWord;
@@ -19,9 +23,18 @@ while(wordsEnumerator.MoveNext())
 public class CustomCollection : IEnumerable<string>
 {
     public string[] Words { get; }
+    private int _currentIndex = 0;
+    public CustomCollection(int capacity = 10)
+    {
+        Words = new string[capacity];
+    }
     public CustomCollection(string[] words)
     {
         Words = words;
+    }
+    public void Add(string value)
+    {
+        Words[_currentIndex++] = value; 
     }
     public string this[int index]
     {
