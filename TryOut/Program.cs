@@ -1,11 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 
+string[] stringArray = { "one", "two", "three" };
+int? wordIndex = BinarySearch(stringArray, "three");
+Console.WriteLine(wordIndex);
+
+int? BinarySearch<T>(T[] array, T item) where T: IComparable<T>
+{
+    Array.Sort(array);
+    int low = 0;
+    int high = array.Length - 1;
+    while(high >= low)
+    {
+        int middle = (low + high) / 2;
+        if (array[middle].Equals(item)) return middle;
+        if (array[middle].CompareTo(item) < 0) low = middle + 1;
+        if (array[middle].CompareTo(item) > 0) high = middle - 1;
+    }
+    return null;
+}
+
 int[] array = new int[] { 5, 2, 6, 2, 6, 3, 2, 1, 4, 7, 8, 9 };
-int? index = BinarySearch(array, 7);
+int? index = BinarySearchInt(array, 7);
 Console.WriteLine(index);
 
-int? BinarySearch(int[] array, int item)
+int? BinarySearchInt(int[] array, int item)
 {
     Array.Sort(array);
     int low = 0;
