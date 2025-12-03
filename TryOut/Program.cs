@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-var type = new CustomCollection(new string[] { "name1", "name2", "name3" });
+CustomCollection type = new CustomCollection(new string[] { "name1", "name2", "name3" });
 foreach(object item in type) // boxing may happen which is bad.
 {
     Console.WriteLine(item);
@@ -14,7 +14,7 @@ while(wordsEnumerator.MoveNext())
     Console.WriteLine(currentWord);
 }
 */
-public class CustomCollection : IEnumerable
+public class CustomCollection : IEnumerable<string>
 {
     public string[] Words { get; }
     public CustomCollection(string[] words)
@@ -22,9 +22,15 @@ public class CustomCollection : IEnumerable
         Words = words;
     }
 
-    public IEnumerator GetEnumerator()
+    IEnumerator IEnumerable.GetEnumerator()
     {
         return new WordsEnumerator(Words);
+    }
+
+    public IEnumerator<string> GetEnumerator()
+    {
+        Console.WriteLine("Generic");
+        throw new NotImplementedException();
     }
 }
 
