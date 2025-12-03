@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 
-CustomCollection type = new CustomCollection(new string[] { "name1", "name2", "name3" });
-foreach(object item in type) // boxing may happen which is bad.
+var type = new CustomCollection(new string[] { "name1", "name2", "name3" });
+foreach(var item in type) // boxing may happen which is bad.
 {
     Console.WriteLine(item);
 }
@@ -34,7 +34,7 @@ public class CustomCollection : IEnumerable<string>
     }
 }
 
-public class WordsEnumerator : IEnumerator
+public class WordsEnumerator : IEnumerator<string>
 {
     private const int _InitialPosition = -1;
     private int _currentPosition = _InitialPosition;
@@ -43,11 +43,31 @@ public class WordsEnumerator : IEnumerator
     {
         _words = words;
     }
-    public object Current => _words[_currentPosition];
+
+    public string Current
+    {
+        get
+        {
+            try
+            {
+                return _words[_currentPosition];
+            } catch(IndexOutOfRangeException ex)
+            {
+                throw new IndexOutOfRangeException($"{nameof(CustomCollection)}'s limit reached", ex);
+            }
+        }
+    }
+
+    object IEnumerator.Current => Current;
+
+    public void Dispose()
+    {
+        // whaa..
+    }
 
     public bool MoveNext()
     {
-        _currentPosition++;
+        ++_currentPosition;
         return _currentPosition < _words.Length;
     }
 
@@ -56,3 +76,29 @@ public class WordsEnumerator : IEnumerator
         _currentPosition = _InitialPosition;
     }
 } 
+interface IApp
+{
+    void Run();
+    void AppMethod();
+}
+interface IProcess<T> : IApp
+{
+    new T Run();
+}
+class CustomShit<T> : IProcess<T>
+{
+    public void AppMethod()
+    {
+        throw new NotImplementedException();
+    }
+
+    public T Run()
+    {
+        throw new NotImplementedException();
+    }
+
+    void IApp.Run()
+    {
+        throw new NotImplementedException();
+    }
+}
