@@ -1,24 +1,31 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Collections;
 
-HttpClient httpClient = new();
-httpClient.BaseAddress = new Uri("http://localhost:5290/");
-HttpResponseMessage response = await httpClient.GetAsync("weatherforecast");
-string content = await response.Content.ReadAsStringAsync();
-Console.WriteLine(content);
-
-IEnumerable<Weather>? weathers = JsonSerializer.Deserialize<IEnumerable<Weather>>(content);
-if (weathers is null) return;
-foreach(Weather weather in weathers)
+var text = "string";
+foreach(char ch in text)
 {
-    Console.WriteLine(weather);
-}    
-readonly record struct Weather 
-{
-    [JsonPropertyName("date")]
-    public DateOnly Date { get; init; }
-    [JsonPropertyName("temperatureC")]
-    public int TemperatureC { get; init; }
-    [JsonPropertyName("summary")] public string Summary { get; init; }
-    [JsonPropertyName("temperatureF")] public int TemperatureF { get; init; }
+    Console.WriteLine(ch);
 }
+
+var type = new CustomType(new string[] { "name1", "name2", "name3" });
+
+IEnumerator wordsEnumerator = type.GetEnumerator();
+object currentWord;
+while(wordsEnumerator.MoveNext())
+{
+    currentWord = wordsEnumerator.Current;
+    Console.WriteLine(currentWord);
+}
+public class CustomType : IEnumerable
+{
+    public string[] Words { get; }
+    public CustomType(string[] words)
+    {
+        Words = words;
+    }
+
+    public IEnumerator GetEnumerator()
+    {
+        throw new NotImplementedException();
+    }
+}
+
