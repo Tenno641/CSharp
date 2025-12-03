@@ -1,6 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 
+
+
+
+Stack<int> stack = new Stack<int>();
+stack.Push(1);
+stack.Push(4);
+
+int first = stack.Pop();
+int stackSecond = stack.Peek();
+
+Queue<int> intQueue = new Queue<int>();
+intQueue.Enqueue(1);
+intQueue.Enqueue(4);
+
+int number = intQueue.Dequeue();
+int second = intQueue.Peek();
+
+PriorityQueue<string, int> priorityQueue = new PriorityQueue<string, int>();
+priorityQueue.Enqueue("VIP", 1);
+priorityQueue.Enqueue("Regular", 3);
+priorityQueue.Enqueue("Platinum", 2);
+
+Console.ReadLine();
+
 var hugeArray = Enumerable.Repeat(0, 100_000_000);
 List<int> ints = new List<int>(hugeArray);
 
@@ -8,8 +32,6 @@ ints.Clear(); // memory still allocated
 ints.TrimExcess();
 
 ints.Remove(2); // will search the list and then delete
-
-
 
 string[] stringArray = { "one", "two", "three" };
 int? wordIndex = BinarySearch(stringArray, "three");
@@ -84,6 +106,17 @@ while(wordsEnumerator.MoveNext())
     Console.WriteLine(currentWord);
 }
 */
+
+public static class HashSetsUnionExercise
+{
+    public static HashSet<T> CreateUnion<T>(
+        HashSet<T> set1, HashSet<T> set2)
+    {
+        IEnumerable<T> result = set1.Union(set2);
+        return new HashSet<T>(result);
+    }
+}
+
 public class CustomCollection : IEnumerable<string>
 {
     public string[] Words { get; }
