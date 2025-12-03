@@ -1,6 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 
+int[] array = new int[] { 5, 2, 6, 2, 6, 3, 2, 1, 4, 7, 8, 9 };
+int? index = BinarySearch(array, 7);
+Console.WriteLine(index);
+
+int? BinarySearch(int[] array, int item)
+{
+    Array.Sort(array);
+    int low = 0;
+    int high = array.Length - 1;
+    while (high >= low)
+    {
+        int middle = (high + low) / 2;
+        if (array[middle].Equals(item)) return middle;
+        if (array[middle] > item) high = middle - 1;
+        if (array[middle] < item) low = middle + 1;
+    }
+    return null;
+}
+
+/*
 List<string> words = (List<string>)GetNumbers();
 words.Add("Honga-Bonga");
 
@@ -12,7 +32,6 @@ IEnumerable<string> GetNumbers()
     return new ReadOnlyCollection<string>(words);
 }
 
-/*
 var array = new int[] { 1, 5, 6, 3 };
 var implementedInterfaces = array.GetType().GetInterfaces();
 Console.WriteLine(string.Join<Type>(Environment.NewLine, implementedInterfaces));
