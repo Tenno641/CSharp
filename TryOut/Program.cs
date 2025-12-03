@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 
-var text = "string";
-foreach(char ch in text)
+var type = new CustomCollection(new string[] { "name1", "name2", "name3" });
+foreach(object item in type) // boxing may happen which is bad.
 {
-    Console.WriteLine(ch);
+    Console.WriteLine(item);
 }
-
-var type = new CustomType(new string[] { "name1", "name2", "name3" });
-
+/*
 IEnumerator wordsEnumerator = type.GetEnumerator();
 object currentWord;
 while(wordsEnumerator.MoveNext())
@@ -15,17 +13,40 @@ while(wordsEnumerator.MoveNext())
     currentWord = wordsEnumerator.Current;
     Console.WriteLine(currentWord);
 }
-public class CustomType : IEnumerable
+*/
+public class CustomCollection : IEnumerable
 {
     public string[] Words { get; }
-    public CustomType(string[] words)
+    public CustomCollection(string[] words)
     {
         Words = words;
     }
 
     public IEnumerator GetEnumerator()
     {
-        throw new NotImplementedException();
+        return new WordsEnumerator(Words);
     }
 }
 
+public class WordsEnumerator : IEnumerator
+{
+    private const int _InitialPosition = -1;
+    private int _currentPosition = _InitialPosition;
+    private string[] _words;
+    public WordsEnumerator(string[] words)
+    {
+        _words = words;
+    }
+    public object Current => _words[_currentPosition];
+
+    public bool MoveNext()
+    {
+        _currentPosition++;
+        return _currentPosition < _words.Length;
+    }
+
+    public void Reset()
+    {
+        _currentPosition = _InitialPosition;
+    }
+} 
