@@ -1,9 +1,63 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
+using System.Numerics;
 
 
+var items = new int[] { 1, 5, 3, -6, 5, 1 };
+IEnumerable<int> distinctNumbers = items.Distinct();
+foreach(var number in distinctNumbers)
+{
+    Console.WriteLine(number);
+}
+
+IEnumerable<int> PositiveNumbers = items.GetNumbersBeforeNegative();
+foreach (var number in PositiveNumbers)
+{
+    Console.WriteLine(number);
+}
 
 
+var iterator = GenerateNumber();
+foreach(var item in iterator)
+{
+    Console.WriteLine(item);
+}
+
+IEnumerable<int> GenerateNumber()
+{
+    for(int i = 0; i < int.MaxValue; i++)
+    {
+        Console.WriteLine($"Yielding {i}");
+        yield return i;
+    }
+}
+
+public static class Extensions
+{
+    public static IEnumerable<T> Distinct<T>(this IEnumerable<T> items)
+    {
+        HashSet<T> set = new HashSet<T>(items);
+        foreach (T item in set)
+        {
+            yield return item;
+            Console.WriteLine("What a helly");
+        }
+    }
+    public static IEnumerable<T> GetNumbersBeforeNegative<T>(this IEnumerable<T> data) where T: INumber<T>
+    {
+        foreach(T item in data)
+        {
+            if (!T.IsNegative(item))
+            {
+                yield return item;
+            } else
+            {
+                yield break;
+            }
+        }
+    }
+}
+/*
 Stack<int> stack = new Stack<int>();
 stack.Push(1);
 stack.Push(4);
@@ -71,7 +125,6 @@ int? BinarySearchInt(int[] array, int item)
     return null;
 }
 
-/*
 List<string> words = (List<string>)GetNumbers();
 words.Add("Honga-Bonga");
 
@@ -105,7 +158,7 @@ while(wordsEnumerator.MoveNext())
     currentWord = wordsEnumerator.Current;
     Console.WriteLine(currentWord);
 }
-*/
+
 
 public static class HashSetsUnionExercise
 {
@@ -215,3 +268,4 @@ public class PairOfArrays<TLeft, TRight>
         }
     }
 }
+*/
