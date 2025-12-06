@@ -11,9 +11,8 @@ EmailPriceChangeNotifier emailPriceChangeNotifier = new(30_000);
 PushPriceChangeNotifier pushPriceChangeNotifier = new(25_000);
 
 GoldPriceReader goldPriceReader = new();
-goldPriceReader.priceRead += emailPriceChangeNotifier.Update;
-goldPriceReader.priceRead += pushPriceChangeNotifier.Update;
-
+goldPriceReader.eventHandler += emailPriceChangeNotifier.Update;
+goldPriceReader.eventHandler += pushPriceChangeNotifier.Update;
 for(int i = 0; i < 3; i++)
 {
     goldPriceReader.ReadCurrentPrice();
@@ -23,14 +22,21 @@ public delegate void Method(int number, string word);
 public delegate void PriceRead(decimal price);
 public class GoldPriceReader
 {
-    public event PriceRead? priceRead;
-
+    public event EventHandler<PriceEventArgs>? eventHandler;
     public void ReadCurrentPrice()
     {
         decimal currentGoldPrice = new Random().Next(
             20_000, 50_000);
-        priceRead?.Invoke(currentGoldPrice);
+        eventHandler?.Invoke(this, new PriceEventArgs(currentGoldPrice));
+    }
+}
 
+public class PriceEventArgs : EventArgs
+{
+    public decimal Price { get; }
+    public PriceEventArgs(decimal price)
+    {
+        Price = price;
     }
 }
 
@@ -44,15 +50,15 @@ public class EmailPriceChangeNotifier
         _notificationThreshold = notificationThreshold;
     }
 
-    public void Update(decimal price)
+    public void Update(object? sender, PriceEventArgs e)
     {
-        if (price > _notificationThreshold)
+        if (e.Price > _notificationThreshold)
         {
             //imagine this is actually sending an email
             Console.WriteLine(
                 $"Sending an email saying that " +
                 $"the gold price exceeded {_notificationThreshold} " +
-                $"and is now {price}\n");
+                $"and is now {e.Price}\n");
         }
     }
 }
@@ -66,15 +72,15 @@ public class PushPriceChangeNotifier{
         _notificationThreshold = notificationThreshold;
     }
 
-    public void Update(decimal price)
+    public void Update(object? sender, PriceEventArgs e)
     {
-        if (price > _notificationThreshold)
+        if (e.Price > _notificationThreshold)
         {
             //imagine this is actually sending a push notification
             Console.WriteLine(
                 $"Sending a push notification saying that " +
                 $"the gold price exceeded {_notificationThreshold} " +
-                $"and is now {price}\n");
+                $"and is now {e.Price}\n");
         }
     }
 }
