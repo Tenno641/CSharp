@@ -1,7 +1,23 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 
-var consoleEncoding = Console.OutputEncoding;
-Console.OutputEncoding = Encoding.Unicode;
+decimal price = 252.252m;
 
-char ch = 'a';
-Console.WriteLine(ch);
+string result = string.Format("Price {0:C}", price);
+Console.WriteLine(result);
+
+string date = string.Format("date {0:D}", DateTime.Now);
+Console.WriteLine(date);
+
+CultureInfo currentCulture = CultureInfo.CurrentCulture;
+Console.WriteLine(currentCulture);
+
+CultureInfo.CurrentCulture = new CultureInfo("ar-SA");
+Console.OutputEncoding = Encoding.UTF8;
+
+string result2 = string.Format("Price {0:C}", price);
+Console.WriteLine(result2);
+
+string date2 = string.Format("date {0:D}", DateTime.Now);
+Console.WriteLine(date2);
+
