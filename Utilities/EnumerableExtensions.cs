@@ -14,4 +14,8 @@ public static class EnumerableExtensions
         }
         return sum;
     }
+    internal static int GetNumberOne()
+    {
+        return 1;
+    }
 }

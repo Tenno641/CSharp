@@ -38,6 +38,24 @@ public class EnumerableExtensionTests
         // Assert
         Assert.AreEqual(expected, result);
     }
+    public void SumOfEvenNumbers_ShallThrowsNullReferenceException_ForNullCollection()
+    {
+        // Arrange
+        int[]? input = null;
+
+        // Assert
+        Assert.Throws<NullReferenceException>(() => input!.SumOfEvenNumbers());
+
+    }
+    [Test]
+    public void GetNumberOne_ShallReturnOne()
+    {
+        // Act
+        int result = EnumerableExtensions.GetNumberOne();
+
+        // Assert
+        Assert.AreEqual(1, result);
+    }
     public static IEnumerable GetCollectionOfPositiveNumbers()
     {
         return new object[]
