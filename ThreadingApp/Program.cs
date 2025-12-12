@@ -1,44 +1,44 @@
-﻿var cancellationTokenSource = new CancellationTokenSource();
+﻿static Task Test(string? input)
+{
+    var task = Task.Run(() => ParseToIntAndPrint(input))
+     .ContinueWith(
+        faultedTask => faultedTask.Exception?.Handle(ex =>
+        {
+            if (HandleExceptionMessage<ArgumentNullException>(ex, "The input if null.")) return true;
+            if (HandleExceptionMessage<FormatException>(ex, "The input is not in a correct format.")) return true;
+            if (HandleExceptionMessage<ArgumentOutOfRangeException>(ex, "Unexpected exception type")) return false;
+            return false;
+        }), TaskContinuationOptions.OnlyOnFaulted);
 
-try
-{
-    var task = Task.Run(() => NeverEndingMethod(cancellationTokenSource), cancellationTokenSource.Token);
-    var task2 = Task.Run(() => NeverEndingMethod2(cancellationTokenSource), cancellationTokenSource.Token);
-    Task.WaitAll(task, task2);
-} catch(AggregateException ex)
-{
-    foreach(Exception exception in ex.InnerExceptions)
-    {
-        Console.WriteLine(exception.Message);
-        Console.WriteLine(exception);
-    }
+    return task;
 }
-//string userInput;
-//do
-//{
-//    userInput = Console.ReadLine();
-//} while (userInput != "cancel");
-//cancellationTokenSource.Cancel();
-
-void NeverEndingMethod(CancellationTokenSource tokenSource)
+static bool HandleExceptionMessage<T>(Exception exception, string message = "")
 {
-    while (true)
+    if (exception is T)
     {
-        //tokenSource.Token.ThrowIfCancellationRequested();
-        throw new NullReferenceException("lol awy");
-        throw new NullReferenceException("el mrar el tafe7");
-        Thread.Sleep(1000);
-        Console.WriteLine("Another one");
+        Console.WriteLine(message);
+        return true;
     }
+    return false;
 }
 
-void NeverEndingMethod2(CancellationTokenSource tokenSource)
+static void ParseToIntAndPrint(string? input)
 {
-    while (true)
+    if (input is null)
     {
-        //tokenSource.Token.ThrowIfCancellationRequested();
-        throw new NullReferenceException("el mrar el tafe7");
-        Thread.Sleep(1000);
-        Console.WriteLine("Another one");
+        throw new ArgumentNullException();
+    }
+
+    if (long.TryParse(input, out long result))
+    {
+        if (result > int.MaxValue)
+        {
+            throw new ArgumentOutOfRangeException("The number is too big for an int.");
+        }
+        Console.WriteLine("Parsing successful, the result is: " + result);
+    }
+    else
+    {
+        throw new FormatException();
     }
 }
