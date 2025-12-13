@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordGenerator", "Passwo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadingApp", "ThreadingApp\ThreadingApp.csproj", "{C9C7C57D-1456-4225-AEC1-B61569F562F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoteFinder", "QuoteFinder\QuoteFinder.csproj", "{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,18 @@ Global
 		{C9C7C57D-1456-4225-AEC1-B61569F562F5}.Release|x64.Build.0 = Release|Any CPU
 		{C9C7C57D-1456-4225-AEC1-B61569F562F5}.Release|x86.ActiveCfg = Release|Any CPU
 		{C9C7C57D-1456-4225-AEC1-B61569F562F5}.Release|x86.Build.0 = Release|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Debug|x64.Build.0 = Debug|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Debug|x86.Build.0 = Debug|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Release|x64.ActiveCfg = Release|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Release|x64.Build.0 = Release|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Release|x86.ActiveCfg = Release|Any CPU
+		{E13A7C3B-CB39-4B00-89D2-28EE2C2CC641}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
